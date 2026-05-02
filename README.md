@@ -7,6 +7,8 @@ Static Vercel deploy package for the NFC participation proposal.
 - `/` renders the clickable UX HTML preview.
 - `/proposal.pdf` downloads the proposal PDF.
 - `/proposal` rewrites to `/proposal.pdf`.
+- `/portfolio.pdf` opens the BigShift portfolio PDF inline.
+- `/portfolio` rewrites to `/portfolio.pdf`.
 
 ## Vercel Setup
 
@@ -20,3 +22,4 @@ After deployment, use:
 
 - `https://<vercel-project>.vercel.app/` for the UX preview
 - `https://<vercel-project>.vercel.app/proposal.pdf` for the PDF download
+- `https://<vercel-project>.vercel.app/portfolio` for the BigShift portfolio PDF

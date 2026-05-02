@@ -25,12 +25,42 @@
           "value": "application/pdf"
         }
       ]
+    },
+    {
+      "source": "/portfolio.pdf",
+      "headers": [
+        {
+          "key": "Content-Disposition",
+          "value": "inline; filename=\"bigshift-portfolio.pdf\""
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/pdf"
+        }
+      ]
+    },
+    {
+      "source": "/portfolio",
+      "headers": [
+        {
+          "key": "Content-Disposition",
+          "value": "inline; filename=\"bigshift-portfolio.pdf\""
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/pdf"
+        }
+      ]
     }
   ],
   "rewrites": [
     {
       "source": "/proposal",
       "destination": "/proposal.pdf"
+    },
+    {
+      "source": "/portfolio",
+      "destination": "/portfolio.pdf"
     }
   ]
 }
