@@ -1,0 +1,2823 @@
+<!doctype html>
+<html lang="ko" class="light" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>화면시안</title>
+  <style>
+    @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
+    @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap");
+    @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap");
+
+    /*
+      HeroUI-style static HTML template
+      - HeroUI React packages are not imported because this artifact must run as a single HTML file.
+      - The naming follows HeroUI's theme-variable and component-slot approach: Button, Card,
+        Chip, Tabs, Table, Form, Spinner, Toast, and Surface-like containers.
+    */
+
+    :root,
+    [data-theme="light"] {
+      color-scheme: light;
+      --background: #f6f7fb;
+      --foreground: #111827;
+      --content1: #ffffff;
+      --content2: #f8fafc;
+      --content3: #eef2f7;
+      --content4: #e4e8f0;
+      --default: #f4f4f5;
+      --default-foreground: #27272a;
+      --primary: #006fee;
+      --primary-foreground: #ffffff;
+      --secondary: #7c3aed;
+      --secondary-foreground: #ffffff;
+      --success: #17c964;
+      --success-foreground: #052e16;
+      --warning: #f5a524;
+      --warning-foreground: #3f2a03;
+      --danger: #f31260;
+      --danger-foreground: #ffffff;
+      --muted: #667085;
+      --muted-foreground: #8a94a6;
+      --border: #d7dde8;
+      --divider: #e5e7eb;
+      --field-background: #ffffff;
+      --field-border: #cbd5e1;
+      --focus-ring: rgba(0, 111, 238, .24);
+      --shadow-small: 0 1px 2px rgba(15, 23, 42, .08);
+      --shadow-medium: 0 8px 28px rgba(15, 23, 42, .10);
+      --radius-small: 6px;
+      --radius-medium: 8px;
+      --radius-large: 8px;
+      /* Pretendard is the first-choice sans-serif for generated UX artifacts. */
+      --font-sans: "Pretendard Variable", Pretendard, "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      color: var(--foreground);
+      background: var(--background);
+      font-family: var(--font-sans);
+      text-rendering: optimizeLegibility;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: .45;
+    }
+
+    .app-shell {
+      width: min(1600px, calc(100vw - 16px));
+      height: 100%;
+      margin: 0 auto;
+      padding: 8px 0;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 8px;
+      overflow: hidden;
+    }
+
+    .app-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .header-main {
+      display: grid;
+      justify-items: start;
+      gap: 8px;
+    }
+
+    .app-title {
+      margin: 0;
+      color: var(--foreground);
+      font-size: 24px;
+      font-weight: 760;
+      line-height: 1.22;
+      letter-spacing: 0;
+    }
+
+    .app-summary {
+      max-width: 1040px;
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .header-tools {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: flex-end;
+      gap: 14px;
+      flex-shrink: 0;
+    }
+
+    .brand-logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-end;
+      min-height: 34px;
+      text-decoration: none;
+    }
+
+    .brand-logo img {
+      display: block;
+      width: 154px;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .tabs {
+      display: inline-flex;
+      width: fit-content;
+      max-width: 100%;
+      flex-wrap: wrap;
+      gap: 4px;
+      align-items: center;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-large);
+      background: var(--content1);
+      padding: 3px;
+      box-shadow: var(--shadow-small);
+    }
+
+    .tab {
+      min-height: 30px;
+      border: 0;
+      border-radius: var(--radius-small);
+      background: transparent;
+      color: var(--muted);
+      padding: 5px 10px;
+      font-size: 13px;
+      font-weight: 690;
+      transition: background .16s ease, color .16s ease, box-shadow .16s ease;
+    }
+
+    .tab:hover {
+      background: var(--content2);
+      color: var(--foreground);
+    }
+
+    .tab[aria-selected="true"],
+    .tab.is-selected {
+      background: var(--primary);
+      color: var(--primary-foreground);
+      box-shadow: var(--shadow-small);
+    }
+
+    .mode-panel {
+      display: none;
+    }
+
+    .mode-panel.is-active {
+      display: block;
+    }
+
+    .card {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-large);
+      background: var(--content1);
+      box-shadow: var(--shadow-medium);
+    }
+
+    .card--secondary {
+      background: var(--content2);
+    }
+
+    .card__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--divider);
+      background: var(--content2);
+    }
+
+    .card__title {
+      margin: 0;
+      color: var(--foreground);
+      font-size: 16px;
+      font-weight: 760;
+      line-height: 1.35;
+    }
+
+    .card__description {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .card__actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 36px;
+      border: 1px solid transparent;
+      border-radius: var(--radius-small);
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 720;
+      line-height: 1;
+      text-decoration: none;
+      transition: background .16s ease, border-color .16s ease, color .16s ease, transform .16s ease;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .button:active {
+      transform: translateY(1px);
+    }
+
+    .button--solid.button--primary {
+      background: var(--primary);
+      color: var(--primary-foreground);
+    }
+
+    .button--solid.button--success {
+      background: var(--success);
+      color: var(--success-foreground);
+    }
+
+    .button--solid.button--danger {
+      background: var(--danger);
+      color: var(--danger-foreground);
+    }
+
+    .button--flat {
+      border-color: transparent;
+      background: rgba(0, 111, 238, .10);
+      color: var(--primary);
+    }
+
+    .button--bordered {
+      border-color: var(--border);
+      background: var(--content1);
+      color: var(--default-foreground);
+    }
+
+    .button--bordered:hover,
+    .button--flat:hover {
+      border-color: var(--primary);
+      background: rgba(0, 111, 238, .12);
+      color: var(--primary);
+    }
+
+    .button--sm {
+      min-height: 30px;
+      padding: 6px 10px;
+      font-size: 12px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      border: 1px solid transparent;
+      border-radius: var(--radius-small);
+      background: var(--default);
+      color: var(--default-foreground);
+      padding: 3px 8px;
+      font-size: 11px;
+      font-weight: 690;
+      line-height: 1.1;
+      white-space: nowrap;
+    }
+
+    .chip--primary {
+      background: rgba(0, 111, 238, .12);
+      color: #005bc4;
+    }
+
+    .chip--success {
+      background: rgba(23, 201, 100, .16);
+      color: #047857;
+    }
+
+    .chip--warning {
+      background: rgba(245, 165, 36, .18);
+      color: #92400e;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      min-height: 560px;
+    }
+
+    .screen-browser {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      min-height: 0;
+      height: 100%;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-large);
+      background: var(--content1);
+    }
+
+    .screen-list {
+      border-right: 1px solid var(--divider);
+      background: var(--content2);
+      min-height: 0;
+      overflow: auto;
+    }
+
+    .screen-browser.mode-panel:not(.is-active),
+    .scenario-browser.mode-panel:not(.is-active) {
+      display: none;
+    }
+
+    .screen-browser.mode-panel.is-active,
+    .scenario-browser.mode-panel.is-active {
+      display: grid;
+    }
+
+    .scenario-browser {
+      display: grid;
+      grid-template-columns: 320px minmax(0, 1fr);
+      min-height: 0;
+      height: 100%;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-large);
+      background: var(--content1);
+    }
+
+    .scenario-list {
+      display: grid;
+      align-content: start;
+      min-height: 0;
+      overflow: auto;
+      border-right: 1px solid var(--divider);
+      background: var(--content2);
+    }
+
+    .scenario-item {
+      width: 100%;
+      display: grid;
+      gap: 10px;
+      border: 0;
+      border-bottom: 1px solid var(--divider);
+      border-left: 3px solid transparent;
+      background: transparent;
+      padding: 14px 16px;
+      color: var(--foreground);
+      text-align: left;
+      cursor: pointer;
+      transition: background .16s ease, border-color .16s ease;
+    }
+
+    .scenario-item:hover {
+      background: var(--content3);
+    }
+
+    .scenario-item.is-selected {
+      border-left-color: var(--primary);
+      background: rgba(0, 111, 238, .10);
+    }
+
+    .scenario-item__title {
+      display: block;
+      font-size: 13px;
+      font-weight: 760;
+      line-height: 1.45;
+    }
+
+    .scenario-item__description {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .scenario-item__flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      align-items: center;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 690;
+      line-height: 1.45;
+    }
+
+    .scenario-flow-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-small);
+      background: var(--content1);
+      color: var(--foreground);
+      padding: 3px 8px;
+      font-size: 11px;
+      font-weight: 720;
+      line-height: 1.1;
+      box-shadow: var(--shadow-small);
+    }
+
+    .scenario-flow-arrow {
+      color: var(--muted-foreground);
+      font-size: 12px;
+      font-weight: 760;
+      line-height: 1;
+    }
+
+    .scenario-run {
+      width: 100%;
+      margin-top: 2px;
+    }
+
+    .scenario-stage {
+      position: relative;
+      min-width: 0;
+      min-height: 0;
+      display: grid;
+      grid-template-rows: minmax(0, 1fr);
+      background: var(--content1);
+      overflow: hidden;
+    }
+
+    .scenario-viewport {
+      position: relative;
+      min-width: 0;
+      min-height: 0;
+      overflow: auto;
+      background: var(--content1);
+      scroll-behavior: smooth;
+    }
+
+    .scenario-viewport .screen-body {
+      min-height: 100%;
+      overflow: visible;
+    }
+
+    .scenario-viewport .is-scenario-highlight {
+      outline: 3px solid rgba(249, 115, 22, .72);
+      outline-offset: 4px;
+      box-shadow: 0 0 0 8px rgba(249, 115, 22, .18), 0 10px 28px rgba(15, 23, 42, .16);
+    }
+
+    .scenario-cursor {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 42px;
+      height: 42px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(24px, 86px);
+      transition: transform .58s cubic-bezier(.22, 1, .36, 1), opacity .16s ease;
+      z-index: 30;
+    }
+
+    .scenario-cursor.is-visible {
+      opacity: 1;
+    }
+
+    .scenario-cursor::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='42' height='42' viewBox='0 0 42 42' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg filter='url(%23shadow)'%3E%3Cpath d='M8.7 7.8C8.1 6.4 9.6 5 10.9 5.7L34.2 17.2C35.7 17.9 35.5 20 33.9 20.4L24.5 22.6C24 22.7 23.5 23.1 23.3 23.6L19.7 32.7C19.1 34.2 17 34.2 16.4 32.7L8.7 7.8Z' fill='%230A0A0A' stroke='white' stroke-width='4' stroke-linejoin='round'/%3E%3Cpath d='M10.2 7.8L17.9 32.2L21.6 22.5C21.9 21.8 22.5 21.2 23.3 21L33.4 18.6L10.2 7.8Z' fill='%230A0A0A'/%3E%3C/g%3E%3Cdefs%3E%3Cfilter id='shadow' x='2' y='1' width='37' height='38' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E%3CfeDropShadow dx='0' dy='2' stdDeviation='2' flood-color='%230F172A' flood-opacity='0.35'/%3E%3C/filter%3E%3C/defs%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-size: contain;
+      filter: drop-shadow(0 0 1px rgba(255, 255, 255, .9));
+    }
+
+    .scenario-cursor::after {
+      content: "";
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(0, 111, 238, .68);
+      border-radius: 999px;
+      opacity: 0;
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, .70), 0 0 18px rgba(0, 111, 238, .36);
+    }
+
+    .scenario-cursor.is-clicking::after {
+      opacity: 1;
+      border-color: var(--primary);
+      animation: cursor-pulse .52s ease-out both;
+    }
+
+    @keyframes cursor-pulse {
+      from {
+        opacity: .95;
+        transform: scale(.65);
+      }
+      to {
+        opacity: 0;
+        transform: scale(3);
+      }
+    }
+
+    .listbox-item {
+      width: 100%;
+      display: block;
+      border: 0;
+      border-bottom: 1px solid var(--divider);
+      border-left: 3px solid transparent;
+      background: transparent;
+      padding: 14px 16px;
+      color: var(--foreground);
+      cursor: pointer;
+      text-align: left;
+      transition: background .16s ease, border-color .16s ease;
+    }
+
+    .listbox-item:hover {
+      background: var(--content3);
+    }
+
+    .listbox-item[aria-selected="true"],
+    .listbox-item.is-selected {
+      border-left-color: var(--primary);
+      background: rgba(0, 111, 238, .10);
+    }
+
+    .listbox-item__title {
+      display: block;
+      color: var(--foreground);
+      font-size: 13px;
+      font-weight: 760;
+      line-height: 1.45;
+    }
+
+    .listbox-item__meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 8px;
+    }
+
+    .listbox-item__action {
+      margin-top: 10px;
+    }
+
+    .chat {
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      background: var(--content1);
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 48px;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--divider);
+      background: var(--content1);
+    }
+
+    .messages {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 480px;
+      max-height: 620px;
+      overflow: auto;
+      padding: 18px;
+    }
+
+    .empty-state {
+      height: 100%;
+      display: grid;
+      place-items: center;
+      color: var(--muted-foreground);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .message {
+      max-width: 78%;
+      border-radius: var(--radius-medium);
+      padding: 10px 12px;
+      font-size: 13px;
+      line-height: 1.65;
+      animation: message-in .18s ease both;
+    }
+
+    .message--user {
+      align-self: flex-end;
+      border-bottom-right-radius: 3px;
+      background: var(--primary);
+      color: var(--primary-foreground);
+      font-weight: 690;
+    }
+
+    .message--assistant {
+      align-self: flex-start;
+      border: 1px solid var(--border);
+      border-top-left-radius: 3px;
+      background: var(--content2);
+    }
+
+    .message--error {
+      border-color: rgba(243, 18, 96, .24);
+      background: rgba(243, 18, 96, .10);
+      color: #9f1239;
+    }
+
+    .status-pill {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(0, 111, 238, .18);
+      border-radius: var(--radius-medium);
+      background: rgba(0, 111, 238, .10);
+      color: #005bc4;
+      padding: 8px 11px;
+      font-size: 12px;
+      font-weight: 690;
+      animation: message-in .18s ease both;
+    }
+
+    .spinner {
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(0, 111, 238, .24);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin .75s linear infinite;
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .option-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-medium);
+      background: var(--content1);
+      padding: 10px;
+      text-align: left;
+      transition: border-color .16s ease, background .16s ease;
+    }
+
+    .option-card:hover,
+    .option-card.is-selected {
+      border-color: var(--primary);
+      background: rgba(0, 111, 238, .08);
+    }
+
+    .option-card__title {
+      display: block;
+      color: var(--foreground);
+      font-size: 12px;
+      font-weight: 760;
+    }
+
+    .option-card__description {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+    .stack {
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .surface {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-medium);
+      background: var(--content1);
+      padding: 10px;
+    }
+
+    .surface-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .surface-title {
+      color: var(--foreground);
+      font-size: 12px;
+      font-weight: 760;
+    }
+
+    .surface-description {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+    .field {
+      display: grid;
+      gap: 5px;
+    }
+
+    .label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 720;
+    }
+
+    .input,
+    .textarea,
+    .select {
+      width: 100%;
+      border: 1px solid var(--field-border);
+      border-radius: var(--radius-small);
+      background: var(--field-background);
+      color: var(--foreground);
+      padding: 8px 10px;
+      font-size: 13px;
+      outline: none;
+      transition: border-color .16s ease, box-shadow .16s ease;
+    }
+
+    .textarea {
+      min-height: 88px;
+      resize: vertical;
+    }
+
+    .input:focus,
+    .textarea:focus,
+    .select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--focus-ring);
+    }
+
+    .preview-card {
+      overflow: hidden;
+      margin-top: 10px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-medium);
+      background: var(--content1);
+    }
+
+    .preview-card__header {
+      display: grid;
+      gap: 4px;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--divider);
+      background: var(--content2);
+      font-size: 12px;
+    }
+
+    .preview-card__body {
+      padding: 12px;
+      font-size: 12px;
+      line-height: 1.65;
+      white-space: pre-line;
+    }
+
+    .table-wrapper {
+      overflow: auto;
+      margin-top: 10px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-medium);
+      background: var(--content1);
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .table th,
+    .table td {
+      border-bottom: 1px solid var(--divider);
+      padding: 9px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .table th {
+      background: var(--content2);
+      color: var(--muted);
+      font-weight: 760;
+    }
+
+    .table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .listbox-item__description {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .screen-canvas {
+      overflow: auto;
+      min-width: 0;
+      min-height: 0;
+      background: var(--content1);
+    }
+
+    .screen-body {
+      padding: 6px;
+      min-height: 100%;
+    }
+
+    .screen-canvas .screen-body {
+      min-height: 100%;
+      overflow: visible;
+    }
+
+    .scenario-viewport .screen-body > .az-screen,
+    .screen-canvas .screen-body > .az-screen {
+      height: calc(100% + 32px) !important;
+      min-height: 0 !important;
+      overflow: hidden !important;
+    }
+
+    .scenario-viewport .screen-body > .az-screen .az-stage,
+    .screen-canvas .screen-body > .az-screen .az-stage {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      height: 100% !important;
+      min-height: 0 !important;
+      overflow: hidden !important;
+      place-items: center !important;
+    }
+
+    .scenario-viewport .screen-body > .az-screen .az-phone,
+    .screen-canvas .screen-body > .az-screen .az-phone {
+      transform: scale(var(--prototype-scale, 1)) !important;
+      transform-origin: center center !important;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .stat-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-medium);
+      background: var(--content2);
+      padding: 12px;
+    }
+
+    .stat-card__label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 720;
+    }
+
+    .stat-card__value {
+      margin-top: 5px;
+      color: var(--foreground);
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .section-title {
+      margin: 0 0 10px;
+      color: var(--foreground);
+      font-size: 14px;
+      font-weight: 760;
+    }
+
+    .toast {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      display: none;
+      max-width: 320px;
+      border: 1px solid rgba(255, 255, 255, .12);
+      border-radius: var(--radius-medium);
+      background: #111827;
+      color: #fff;
+      padding: 12px 14px;
+      font-size: 13px;
+      box-shadow: var(--shadow-medium);
+      z-index: 20;
+    }
+
+    .toast.is-visible {
+      display: block;
+      animation: message-in .18s ease both;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes message-in {
+      from {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 880px) {
+      .app-header,
+      .card__header {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .header-tools {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .tabs {
+        align-self: flex-start;
+      }
+
+      .brand-logo {
+        justify-content: flex-start;
+      }
+
+      .card__actions {
+        width: 100%;
+      }
+
+      .card__actions .button {
+        flex: 1;
+      }
+
+      .layout,
+      .screen-browser,
+      .scenario-browser {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto minmax(0, 1fr);
+      }
+
+      .screen-list,
+      .scenario-list {
+        display: flex;
+        max-height: 168px;
+        overflow-x: auto;
+        overflow-y: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--divider);
+      }
+
+      .listbox-item,
+      .scenario-item {
+        min-width: 220px;
+        border-left: 0;
+        border-bottom: 0;
+        border-right: 1px solid var(--divider);
+      }
+
+      .messages {
+        min-height: 460px;
+      }
+
+      .message {
+        max-width: 92%;
+      }
+
+      .stat-grid,
+      .content-grid,
+      .option-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .app-shell {
+        width: min(100vw - 20px, 1600px);
+        padding: 16px 0;
+      }
+
+      .app-title {
+        font-size: 22px;
+      }
+
+      .card__header,
+      .screen-body,
+      .messages {
+        padding: 12px;
+      }
+    }
+
+    /* Inlined 04-ux CSS */
+    /* Inline from 04-ux/screen.css */
+    .nfc-screen {
+      --font-sans: "Pretendard Variable", Pretendard, "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --screen-width: 1600px;
+      --screen-height: 900px;
+      --background: #f5f7f4;
+      --foreground: #17221b;
+      --text: #263229;
+      --muted: #6f7a72;
+      --border: #dde5dc;
+      --content1: #ffffff;
+      --content2: #eef5ef;
+      --primary: #217a4b;
+      --primary-dark: #145a35;
+      --secondary: #2563eb;
+      --success: #1b8f5a;
+      --warning: #c27a12;
+      --danger: #c94b4b;
+      --soft-blue: #eaf2ff;
+      --soft-green: #eaf6ed;
+      --soft-amber: #fff5dd;
+      --card-radius: 8px;
+      min-height: 100%;
+      color: var(--text);
+      background: var(--background);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      line-height: 1.45;
+      letter-spacing: 0;
+    }
+
+    .screen-body > .nfc-screen,
+    .scenario-viewport .nfc-screen {
+      margin: 0;
+    }
+
+    .screen-body > .nfc-screen .nfc-stage,
+    .scenario-viewport .nfc-screen .nfc-stage {
+      min-height: 0;
+      padding: 0;
+      place-items: start center;
+    }
+
+    .screen-body > .nfc-screen .nfc-frame,
+    .scenario-viewport .nfc-screen .nfc-frame {
+      height: var(--screen-height);
+      min-height: var(--screen-height);
+    }
+
+    .proposal-ux-capture > .nfc-screen {
+      width: var(--screen-width);
+      height: var(--screen-height);
+      min-height: var(--screen-height);
+      margin: 0;
+    }
+
+    html:has(body > .nfc-screen),
+    body:has(> .nfc-screen) {
+      margin: 0;
+      min-height: 100%;
+      background: var(--background);
+    }
+
+    .nfc-screen *,
+    .nfc-screen *::before,
+    .nfc-screen *::after {
+      box-sizing: border-box;
+    }
+
+    .nfc-screen button,
+    .nfc-screen input,
+    .nfc-screen select {
+      font: inherit;
+    }
+
+    .nfc-stage {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background:
+        radial-gradient(circle at 12% 8%, rgba(33, 122, 75, 0.08), transparent 24%),
+        linear-gradient(180deg, #f8faf7 0%, #eef4ef 100%);
+    }
+
+    .nfc-frame {
+      width: min(100%, var(--screen-width));
+      min-height: var(--screen-height);
+      display: grid;
+      grid-template-columns: 236px minmax(0, 1fr);
+      overflow: hidden;
+      background: var(--content1);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 26px 70px rgba(31, 54, 38, 0.14);
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      padding: 22px 16px;
+      background: #f1f6f0;
+      border-right: 1px solid var(--border);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 8px;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 800;
+      background: var(--primary);
+      border-radius: 8px;
+    }
+
+    .brand-copy strong,
+    .nav-button span,
+    .section-title,
+    .metric-value,
+    .table strong {
+      color: var(--foreground);
+    }
+
+    .brand-copy {
+      display: grid;
+      gap: 1px;
+    }
+
+    .brand-copy span,
+    .muted,
+    .meta,
+    .card-label {
+      color: var(--muted);
+    }
+
+    .nav {
+      display: grid;
+      gap: 6px;
+    }
+
+    .nav-button,
+    .button,
+    .icon-button {
+      min-height: 40px;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .nav-button {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      color: #435047;
+      background: transparent;
+      border-radius: 8px;
+      text-align: left;
+    }
+
+    .nav-button:hover,
+    .nav-button.is-active {
+      color: var(--primary-dark);
+      background: #e4efe5;
+    }
+
+    .nav-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: #a8b8aa;
+    }
+
+    .nav-button.is-active .nav-dot {
+      background: var(--primary);
+    }
+
+    .sidebar-card {
+      margin-top: auto;
+      padding: 16px;
+      background: var(--content1);
+      border: 1px solid var(--border);
+      border-radius: var(--card-radius);
+    }
+
+    .sidebar-card strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--foreground);
+    }
+
+    .main {
+      min-width: 0;
+      display: grid;
+      grid-template-rows: 72px minmax(0, 1fr);
+      background: var(--background);
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0 24px;
+      background: rgba(255, 255, 255, 0.86);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      margin: 0 0 4px;
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 760;
+    }
+
+    .topbar h1,
+    .panel h2,
+    .profile-title h2 {
+      margin: 0;
+      color: var(--foreground);
+    }
+
+    .topbar h1 {
+      font-size: 28px;
+      line-height: 1.2;
+      font-weight: 760;
+    }
+
+    .topbar-actions,
+    .action-row,
+    .filter-row,
+    .chip-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-width: 40px;
+      padding: 0 14px;
+      color: #fff;
+      background: var(--primary);
+      border-radius: 8px;
+      font-weight: 720;
+    }
+
+    .button:hover {
+      background: var(--primary-dark);
+    }
+
+    .button--secondary {
+      color: var(--foreground);
+      background: var(--content1);
+      border: 1px solid var(--border);
+    }
+
+    .button--secondary:hover {
+      background: var(--content2);
+    }
+
+    .button--sm {
+      min-height: 34px;
+      padding: 0 12px;
+      font-size: 13px;
+    }
+
+    .content {
+      min-width: 0;
+      overflow: auto;
+      padding: 24px;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(340px, 0.8fr);
+      gap: 18px;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .metric-card,
+    .panel,
+    .mini-card {
+      background: var(--content1);
+      border: 1px solid var(--border);
+      border-radius: var(--card-radius);
+    }
+
+    .metric-card {
+      min-height: 132px;
+      padding: 18px;
+      display: grid;
+      align-content: space-between;
+    }
+
+    .metric-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .metric-value {
+      margin-top: 12px;
+      font-size: 30px;
+      line-height: 1.1;
+      font-weight: 780;
+    }
+
+    .metric-note {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .panel {
+      overflow: hidden;
+    }
+
+    .panel-header {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .panel-header h2 {
+      font-size: 16px;
+      line-height: 1.35;
+    }
+
+    .panel-header p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .panel-body {
+      padding: 18px 20px 20px;
+    }
+
+    .chart-panel {
+      min-height: 322px;
+    }
+
+    .bar-chart {
+      height: 168px;
+      display: flex;
+      align-items: end;
+      gap: 12px;
+      padding: 14px 8px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .bar {
+      flex: 1;
+      min-width: 0;
+      display: grid;
+      align-content: end;
+      gap: 8px;
+      height: 100%;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .bar span {
+      display: block;
+      height: var(--bar-height, 86px);
+      min-height: 24px;
+      border-radius: 6px 6px 0 0;
+      background: linear-gradient(180deg, #5fb983, var(--primary));
+    }
+
+    .place-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .place-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 72px;
+      padding: 14px;
+      background: #f9fbf8;
+      border: 1px solid var(--border);
+      border-radius: var(--card-radius);
+    }
+
+    .signal {
+      position: relative;
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: var(--soft-green);
+    }
+
+    .signal::before,
+    .signal::after {
+      content: "";
+      position: absolute;
+      border: 1.5px solid rgba(33, 122, 75, 0.42);
+      border-radius: 999px;
+    }
+
+    .signal::before {
+      inset: 8px;
+    }
+
+    .signal::after {
+      inset: 2px;
+    }
+
+    .signal-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--primary);
+    }
+
+    .table-scroll {
+      overflow: auto;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+    }
+
+    .table th,
+    .table td {
+      height: 54px;
+      padding: 0 14px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    .table th {
+      height: 44px;
+      color: #59665d;
+      background: #f6faf6;
+      font-size: 12px;
+      font-weight: 720;
+    }
+
+    .table--compact {
+      min-width: 0;
+    }
+
+    .table--compact th,
+    .table--compact td {
+      padding: 0 12px;
+    }
+
+    .table tbody tr:hover {
+      background: #f8fbf7;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 26px;
+      padding: 0 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 720;
+      white-space: nowrap;
+    }
+
+    .chip--success {
+      color: #0d6f42;
+      background: #e4f4eb;
+    }
+
+    .chip--warning {
+      color: #8f5700;
+      background: var(--soft-amber);
+    }
+
+    .chip--danger {
+      color: #9e2f35;
+      background: #fae8e8;
+    }
+
+    .chip--blue {
+      color: #1d4fa3;
+      background: var(--soft-blue);
+    }
+
+    .chip--neutral {
+      color: #516056;
+      background: #edf1ed;
+    }
+
+    .input,
+    .select {
+      height: 40px;
+      min-width: 160px;
+      padding: 0 12px;
+      color: var(--foreground);
+      background: var(--content1);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      outline: none;
+    }
+
+    .input:focus,
+    .select:focus,
+    .button:focus-visible,
+    .nav-button:focus-visible {
+      outline: 3px solid rgba(33, 122, 75, 0.22);
+      outline-offset: 2px;
+    }
+
+    .records-layout {
+      display: grid;
+      gap: 16px;
+    }
+
+    .filter-panel {
+      padding: 16px;
+    }
+
+    .summary-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .mini-card {
+      min-height: 86px;
+      padding: 14px;
+    }
+
+    .mini-card strong {
+      display: block;
+      margin-top: 8px;
+      color: var(--foreground);
+      font-size: 22px;
+    }
+
+    .student-layout {
+      display: grid;
+      grid-template-columns: 360px minmax(0, 1fr);
+      gap: 18px;
+    }
+
+    .profile-card {
+      padding: 22px;
+    }
+
+    .student-avatar {
+      width: 72px;
+      height: 72px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 18px;
+      color: #fff;
+      background: linear-gradient(145deg, #217a4b, #4aa36f);
+      border-radius: 16px;
+      font-size: 24px;
+      font-weight: 780;
+    }
+
+    .profile-title h2 {
+      font-size: 28px;
+    }
+
+    .profile-stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .stat-box {
+      padding: 14px;
+      background: #f9fbf8;
+      border: 1px solid var(--border);
+      border-radius: var(--card-radius);
+    }
+
+    .stat-box strong {
+      display: block;
+      margin-top: 8px;
+      color: var(--foreground);
+      font-size: 22px;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 12px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 88px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 14px;
+      min-height: 64px;
+      padding: 12px 14px;
+      background: #f9fbf8;
+      border: 1px solid var(--border);
+      border-radius: var(--card-radius);
+    }
+
+    .progress-track {
+      height: 8px;
+      overflow: hidden;
+      background: #e4ebe4;
+      border-radius: 999px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), #64b982);
+      border-radius: inherit;
+    }
+
+    .distribution {
+      display: grid;
+      gap: 14px;
+    }
+
+    .dist-row {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr) 44px;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .toast-anchor {
+      position: absolute;
+      right: 24px;
+      bottom: 24px;
+      padding: 12px 14px;
+      color: var(--primary-dark);
+      background: #ecf8ef;
+      border: 1px solid #cce8d3;
+      border-radius: var(--card-radius);
+      font-weight: 700;
+    }
+
+    .tag-screen {
+      background:
+        radial-gradient(circle at 50% 18%, rgba(33, 122, 75, 0.12), transparent 28%),
+        linear-gradient(180deg, #f8fbf9 0%, #edf5ef 100%);
+    }
+
+    .tag-stage {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 28px;
+    }
+
+    .tag-phone {
+      width: min(430px, 100%);
+      min-height: 844px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      padding: 22px 20px;
+      background: #f8fbf9;
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      box-shadow: 0 28px 80px rgba(31, 54, 38, 0.16);
+    }
+
+    .tag-topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .tag-title {
+      margin: 0;
+      color: var(--foreground);
+      font-size: 28px;
+      line-height: 36px;
+      font-weight: 800;
+    }
+
+    .date-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 10px;
+      color: var(--primary-dark);
+      background: #e9f8f1;
+      border: 1px solid #bde8d3;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .success-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 430px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 32px 24px;
+      text-align: center;
+      background: var(--content1);
+      border: 1px solid #cfe8dc;
+      border-radius: 24px;
+      box-shadow: 0 14px 34px rgba(26, 48, 40, 0.11);
+    }
+
+    .success-card::before {
+      content: "";
+      position: absolute;
+      inset: -120px auto auto -120px;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: rgba(33, 122, 75, 0.08);
+    }
+
+    .nfc-mark-large {
+      position: relative;
+      width: 128px;
+      height: 128px;
+      display: grid;
+      place-items: center;
+      margin: 8px 0 24px;
+      background: linear-gradient(145deg, #eafaf2, #ffffff);
+      border: 1px solid #ccebdc;
+      border-radius: 38px;
+    }
+
+    .nfc-mark-large::before,
+    .nfc-mark-large::after {
+      content: "";
+      position: absolute;
+      border: 3px solid rgba(33, 122, 75, 0.28);
+      border-left-color: transparent;
+      border-bottom-color: transparent;
+      border-radius: 50%;
+      transform: rotate(45deg);
+    }
+
+    .nfc-mark-large::before {
+      width: 84px;
+      height: 84px;
+    }
+
+    .nfc-mark-large::after {
+      width: 108px;
+      height: 108px;
+    }
+
+    .check-dot {
+      z-index: 1;
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--success);
+      border-radius: 50%;
+      font-size: 30px;
+      font-weight: 900;
+    }
+
+    .success-title {
+      margin: 0;
+      color: var(--foreground);
+      font-size: 31px;
+      line-height: 38px;
+      font-weight: 900;
+    }
+
+    .success-desc {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 23px;
+    }
+
+    .tag-meta {
+      width: 100%;
+      display: grid;
+      gap: 10px;
+      margin-top: 26px;
+    }
+
+    .tag-meta-row {
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      background: #fbfdfc;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      text-align: left;
+    }
+
+    .tag-meta-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .tag-meta-value {
+      color: var(--foreground);
+      font-size: 14px;
+      font-weight: 800;
+      text-align: right;
+    }
+
+    .tag-alert {
+      padding: 14px 16px;
+      color: #6d4a07;
+      background: #fff8e8;
+      border: 1px solid #f3d293;
+      border-radius: 16px;
+      font-size: 13px;
+      line-height: 20px;
+    }
+
+    .tag-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .tag-actions .button {
+      flex: 1 1 160px;
+    }
+
+    @media (max-width: 900px) {
+      .nfc-stage {
+        padding: 0;
+      }
+
+      .nfc-frame {
+        width: 100%;
+        min-height: 100vh;
+        grid-template-columns: 1fr;
+        border: 0;
+        border-radius: 0;
+      }
+
+      .sidebar {
+        gap: 12px;
+        padding: 14px;
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .nav-button {
+        justify-content: center;
+        padding: 9px;
+      }
+
+      .sidebar-card {
+        display: none;
+      }
+
+      .main {
+        grid-template-rows: auto minmax(0, 1fr);
+      }
+
+      .topbar {
+        min-height: 72px;
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 16px;
+      }
+
+      .topbar h1 {
+        font-size: 22px;
+      }
+
+      .content {
+        padding: 16px;
+      }
+
+      .dashboard-grid,
+      .student-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .metric-grid,
+      .summary-strip,
+      .place-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .filter-row {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .input,
+      .select,
+      .button {
+        width: 100%;
+      }
+
+      .timeline-item {
+        grid-template-columns: 1fr;
+      }
+
+      .tag-stage {
+        min-height: 100vh;
+        padding: 0;
+      }
+
+      .tag-phone {
+        width: 100%;
+        min-height: 100vh;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="app-header">
+      <div class="header-main">
+        <h1 class="app-title" id="projectTitle">프로젝트명 UX 시안</h1>
+        <p class="app-summary" id="projectSummary">다음 시안은 시나리오, 화면을 간단히 볼 수 있는 샘플이며, 확정된 최종 시안이 아닙니다. 개발 착수전 사전 협의를 통해 더 좋은 퀄리티의 시안을 제안드립니다.</p>
+        <div class="tabs" role="tablist" aria-label="UX 보기 방식">
+          <button class="tab mode-tab is-selected" type="button" data-mode="flow" role="tab" aria-selected="true">시나리오</button>
+          <button class="tab mode-tab" type="button" data-mode="screens" role="tab" aria-selected="false">화면</button>
+        </div>
+      </div>
+      <div class="header-tools">
+        <a class="brand-logo" href="https://www.bigshift.kr/" target="_blank" rel="noopener" aria-label="빅시프트 홈페이지">
+          <img src="https://www.bigshift.kr/_next/image?q=75&amp;url=%2FcompanyLogoHorizontal.png&amp;w=3840" alt="Bigshift">
+        </a>
+      </div>
+    </header>
+
+    <noscript>
+      <div class="card" style="padding:16px;margin-bottom:18px;">
+        이 UX 시안은 버튼 실행과 화면 전환을 위해 JavaScript가 필요합니다.
+      </div>
+    </noscript>
+
+    <section class="scenario-browser mode-panel is-active" id="flowPanel" aria-label="시나리오 UX">
+      <nav class="scenario-list" id="scenarioList" aria-label="시나리오 목록"></nav>
+      <main class="scenario-stage" id="scenarioStage">
+        <div class="scenario-viewport" id="scenarioViewport"></div>
+        <div class="scenario-cursor" id="scenarioCursor" aria-hidden="true"></div>
+      </main>
+    </section>
+
+    <section class="screen-browser mode-panel" id="screensPanel" aria-label="화면 UX">
+      <nav class="screen-list" id="screenList" aria-label="화면 목록"></nav>
+      <main class="screen-canvas" id="screenCanvas"></main>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    /*
+      프로젝트별 수정 영역:
+      - 상단 헤더, BigShift 로고, 시나리오/화면 탭, 왼쪽 사이드바와 오른쪽 UX 영역은 공통 고정 프레임입니다.
+      - UX_DATA만 바꾸면 HeroUI-style static prototype이 동작합니다.
+      - scripts/build-ux.mjs는 04-ux/*.html을 읽어 UX_DATA.screens[].html에 주입합니다.
+      - scripts/build-ux.mjs는 04-ux/scenarios.json이 있으면 UX_DATA.scenarios에 주입합니다.
+      - 실제 HeroUI React 컴포넌트는 사용하지 않습니다. 이 파일은 빌드 없이 열리는 단일 HTML 산출물입니다.
+      - 기능 흐름은 scenarios.json의 자동 재생 시나리오와 각 화면 내부 상태로 표현합니다.
+    */
+    const UX_DATA = {
+      "project": {
+            "title": "NFC 참여도 기록 관리자 UX 시안",
+            "summary": "다음 시안은 시나리오, 화면을 간단히 볼 수 있는 샘플이며, 확정된 최종 시안이 아닙니다. 개발 착수전 사전 협의를 통해 더 좋은 퀄리티의 시안을 제안드립니다."
+      },
+      "screens": [
+            {
+                  "id": "dashboard",
+                  "title": "참여 현황 대시보드",
+                  "purpose": "오늘 참여 상태와 최근 NFC 태그 기록을 확인합니다.",
+                  "status": "운영 현황",
+                  "actions": [
+                        "참여 기록 보기",
+                        "엑셀 다운로드"
+                  ],
+                  "html": "<section class=\"nfc-screen dashboard-screen\" aria-label=\"참여 현황 대시보드\">\n  <div class=\"nfc-stage\">\n    <div class=\"nfc-frame\">\n      <aside class=\"sidebar\" aria-label=\"관리 메뉴\">\n        <div class=\"brand\">\n          <div class=\"brand-mark\">참</div>\n          <div class=\"brand-copy\">\n            <strong>참여온</strong>\n            <span>health activity desk</span>\n          </div>\n        </div>\n        <nav class=\"nav\" aria-label=\"화면 이동\">\n          <button class=\"nav-button is-active\" type=\"button\"><span class=\"nav-dot\"></span><span>대시보드</span></button>\n          <button class=\"nav-button\" type=\"button\" data-nav-screen=\"records\" data-toast=\"참여 기록 화면으로 이동합니다.\"><span class=\"nav-dot\"></span><span>참여 기록</span></button>\n          <button class=\"nav-button\" type=\"button\" data-nav-screen=\"student\" data-toast=\"최근 학생 상세로 이동합니다.\"><span class=\"nav-dot\"></span><span>학생 상세</span></button>\n        </nav>\n        <div class=\"sidebar-card\">\n          <strong>NFC 기록 상태</strong>\n          <p class=\"meta\">운동장 입구, 체육관, 보건실 앞 태그가 정상 수신 중입니다.</p>\n        </div>\n      </aside>\n\n      <main class=\"main\">\n        <header class=\"topbar\">\n          <div>\n            <p class=\"eyebrow\">2026.05.02 · 건강증진 프로그램</p>\n            <h1>오늘의 참여 현황</h1>\n          </div>\n          <div class=\"topbar-actions\">\n            <button class=\"button button--secondary\" type=\"button\" data-scenario-target=\"dashboard-export\" data-toast=\"오늘 기록 다운로드를 준비했습니다.\">엑셀 다운로드</button>\n            <button class=\"button\" type=\"button\" data-scenario-target=\"dashboard-open-records\" data-nav-screen=\"records\" data-toast=\"참여 기록 화면으로 이동합니다.\">참여 기록 보기</button>\n          </div>\n        </header>\n\n        <div class=\"content\">\n          <div class=\"metric-grid\" aria-label=\"오늘 주요 지표\">\n            <article class=\"metric-card\">\n              <div class=\"metric-top\"><span class=\"card-label\">오늘 태그</span><span class=\"chip chip--success\">정상</span></div>\n              <div><div class=\"metric-value\">184건</div><div class=\"metric-note\">어제보다 18건 증가</div></div>\n            </article>\n            <article class=\"metric-card\">\n              <div class=\"metric-top\"><span class=\"card-label\">참여율</span><span class=\"chip chip--blue\">이번 주</span></div>\n              <div><div class=\"metric-value\">82%</div><div class=\"progress-track\"><div class=\"progress-fill\" style=\"width:82%\"></div></div></div>\n            </article>\n            <article class=\"metric-card\">\n              <div class=\"metric-top\"><span class=\"card-label\">미참여</span><span class=\"chip chip--warning\">확인</span></div>\n              <div><div class=\"metric-value\">17명</div><div class=\"metric-note\">담당자 확인 대상</div></div>\n            </article>\n            <article class=\"metric-card\">\n              <div class=\"metric-top\"><span class=\"card-label\">중복 후보</span><span class=\"chip chip--neutral\">검토</span></div>\n              <div><div class=\"metric-value\">6건</div><div class=\"metric-note\">같은 장소 5분 이내</div></div>\n            </article>\n          </div>\n\n          <div class=\"dashboard-grid\">\n            <section class=\"panel chart-panel\" aria-label=\"기간별 참여도\">\n              <div class=\"panel-header\">\n                <div>\n                  <h2>기간별 참여도</h2>\n                  <p>최근 7일 NFC 태그 기록 기준</p>\n                </div>\n                <span class=\"chip chip--success\">목표 80% 달성</span>\n              </div>\n              <div class=\"panel-body\">\n                <div class=\"bar-chart\" aria-label=\"최근 7일 참여 차트\">\n                  <div class=\"bar\"><span style=\"--bar-height:78px\"></span><em>월</em></div>\n                  <div class=\"bar\"><span style=\"--bar-height:96px\"></span><em>화</em></div>\n                  <div class=\"bar\"><span style=\"--bar-height:104px\"></span><em>수</em></div>\n                  <div class=\"bar\"><span style=\"--bar-height:90px\"></span><em>목</em></div>\n                  <div class=\"bar\"><span style=\"--bar-height:126px\"></span><em>금</em></div>\n                  <div class=\"bar\"><span style=\"--bar-height:112px\"></span><em>토</em></div>\n                  <div class=\"bar\"><span style=\"--bar-height:82px\"></span><em>일</em></div>\n                </div>\n                <div class=\"place-grid\" style=\"margin-top:18px\">\n                  <div class=\"place-card\"><span class=\"signal\"><i class=\"signal-dot\"></i></span><div><strong>운동장 입구</strong><div class=\"meta\">오늘 74건</div></div></div>\n                  <div class=\"place-card\"><span class=\"signal\"><i class=\"signal-dot\"></i></span><div><strong>체육관</strong><div class=\"meta\">오늘 63건</div></div></div>\n                  <div class=\"place-card\"><span class=\"signal\"><i class=\"signal-dot\"></i></span><div><strong>보건실 앞</strong><div class=\"meta\">오늘 28건</div></div></div>\n                  <div class=\"place-card\"><span class=\"signal\"><i class=\"signal-dot\"></i></span><div><strong>급식실 앞</strong><div class=\"meta\">오늘 19건</div></div></div>\n                </div>\n              </div>\n            </section>\n\n            <section class=\"panel\" aria-label=\"최근 NFC 기록\">\n              <div class=\"panel-header\">\n                <div>\n                  <h2>최근 NFC 기록</h2>\n                  <p>새 기록이 수신되면 목록에 바로 반영됩니다.</p>\n                </div>\n                <span class=\"chip chip--blue\">실시간</span>\n              </div>\n              <div class=\"table-scroll\">\n                <table class=\"table table--compact\" aria-label=\"최근 참여 기록\">\n                  <thead><tr><th>학생</th><th>장소</th><th>시각</th><th>상태</th></tr></thead>\n                  <tbody>\n                    <tr><td><strong>김하린</strong><div class=\"meta\">3-2</div></td><td>운동장 입구</td><td>10:42</td><td><span class=\"chip chip--success\">인정</span></td></tr>\n                    <tr><td><strong>박도윤</strong><div class=\"meta\">4-1</div></td><td>체육관</td><td>10:39</td><td><span class=\"chip chip--success\">인정</span></td></tr>\n                    <tr><td><strong>정민아</strong><div class=\"meta\">5-3</div></td><td>보건실 앞</td><td>10:34</td><td><span class=\"chip chip--warning\">중복 후보</span></td></tr>\n                    <tr><td><strong>이서준</strong><div class=\"meta\">6-1</div></td><td>급식실 앞</td><td>10:28</td><td><span class=\"chip chip--success\">인정</span></td></tr>\n                    <tr><td><strong>최윤서</strong><div class=\"meta\">3-1</div></td><td>운동장 입구</td><td>10:21</td><td><span class=\"chip chip--neutral\">수동 확인</span></td></tr>\n                  </tbody>\n                </table>\n              </div>\n            </section>\n          </div>\n        </div>\n      </main>\n    </div>\n  </div>\n</section>"
+            },
+            {
+                  "id": "records",
+                  "title": "참여 기록",
+                  "purpose": "기간, 장소, 학생별 NFC 참여 기록을 조회하고 다운로드합니다.",
+                  "status": "기록 조회",
+                  "actions": [
+                        "필터 적용",
+                        "엑셀 다운로드",
+                        "학생 상세 보기"
+                  ],
+                  "html": "<section class=\"nfc-screen records-screen\" aria-label=\"참여 기록\">\n  <div class=\"nfc-stage\">\n    <div class=\"nfc-frame\">\n      <aside class=\"sidebar\" aria-label=\"관리 메뉴\">\n        <div class=\"brand\">\n          <div class=\"brand-mark\">참</div>\n          <div class=\"brand-copy\"><strong>참여온</strong><span>health activity desk</span></div>\n        </div>\n        <nav class=\"nav\" aria-label=\"화면 이동\">\n          <button class=\"nav-button\" type=\"button\" data-nav-screen=\"dashboard\" data-toast=\"대시보드로 이동합니다.\"><span class=\"nav-dot\"></span><span>대시보드</span></button>\n          <button class=\"nav-button is-active\" type=\"button\"><span class=\"nav-dot\"></span><span>참여 기록</span></button>\n          <button class=\"nav-button\" type=\"button\" data-nav-screen=\"student\" data-toast=\"학생 상세로 이동합니다.\"><span class=\"nav-dot\"></span><span>학생 상세</span></button>\n        </nav>\n        <div class=\"sidebar-card\">\n          <strong>다운로드 기준</strong>\n          <p class=\"meta\">현재 필터 조건 기준으로 학생명, 학년/반, 장소, 태그 시각, 인정 상태를 내려받습니다.</p>\n        </div>\n      </aside>\n\n      <main class=\"main\">\n        <header class=\"topbar\">\n          <div>\n            <p class=\"eyebrow\">참여 데이터 조회</p>\n            <h1>NFC 참여 기록</h1>\n          </div>\n          <div class=\"topbar-actions\">\n            <button class=\"button button--secondary\" type=\"button\" data-scenario-target=\"records-register-student\" data-toast=\"학생 등록 화면은 실제 개발 범위에서 제공됩니다.\">학생 등록</button>\n            <button class=\"button\" type=\"button\" data-scenario-target=\"records-export\" data-toast=\"현재 조건으로 엑셀 파일을 준비했습니다.\">엑셀 다운로드</button>\n          </div>\n        </header>\n\n        <div class=\"content records-layout\">\n          <section class=\"panel filter-panel\" aria-label=\"검색 필터\">\n            <div class=\"filter-row\">\n              <input class=\"input\" type=\"search\" value=\"김하린\" aria-label=\"학생 검색\">\n              <select class=\"select\" aria-label=\"기간 선택\"><option>이번 주</option><option>오늘</option><option>이번 달</option></select>\n              <select class=\"select\" aria-label=\"장소 선택\"><option>전체 장소</option><option>운동장 입구</option><option>체육관</option></select>\n              <select class=\"select\" aria-label=\"상태 선택\"><option>전체 상태</option><option>인정</option><option>중복 후보</option></select>\n              <button class=\"button button--secondary\" type=\"button\" data-scenario-target=\"records-apply-filter\" data-toast=\"필터가 적용되었습니다.\">필터 적용</button>\n            </div>\n          </section>\n\n          <div class=\"summary-strip\" aria-label=\"조회 요약\">\n            <div class=\"mini-card\"><span class=\"card-label\">조회 기록</span><strong>426건</strong><div class=\"meta\">이번 주 전체</div></div>\n            <div class=\"mini-card\"><span class=\"card-label\">인정 기록</span><strong>411건</strong><div class=\"meta\">96.4%</div></div>\n            <div class=\"mini-card\"><span class=\"card-label\">중복 후보</span><strong>9건</strong><div class=\"meta\">관리자 검토</div></div>\n            <div class=\"mini-card\"><span class=\"card-label\">수동 확인</span><strong>6건</strong><div class=\"meta\">리더기 지연 포함</div></div>\n          </div>\n\n          <section class=\"panel\" aria-label=\"참여 기록 테이블\">\n            <div class=\"panel-header\">\n              <div>\n                <h2>전체 참여 기록</h2>\n                <p>학생명, 장소, 태그 시각, 인정 상태를 확인합니다.</p>\n              </div>\n              <div class=\"chip-row\">\n                <span class=\"chip chip--blue\">김하린 검색</span>\n                <span class=\"chip chip--neutral\">이번 주</span>\n              </div>\n            </div>\n            <div class=\"table-scroll\">\n              <table class=\"table\" aria-label=\"참여 기록 목록\">\n                <thead>\n                  <tr><th>학생</th><th>학년/반</th><th>장소</th><th>태그 시각</th><th>기록 ID</th><th>상태</th><th>액션</th></tr>\n                </thead>\n                <tbody>\n                  <tr>\n                    <td><strong>김하린</strong></td><td>3학년 2반</td><td>운동장 입구</td><td>05.02 10:42</td><td>NFC-2481</td><td><span class=\"chip chip--success\">인정</span></td>\n                    <td><button class=\"button button--sm button--secondary\" type=\"button\" data-scenario-target=\"records-open-student\" data-nav-screen=\"student\" data-toast=\"김하린 학생 상세 이력을 엽니다.\">상세</button></td>\n                  </tr>\n                  <tr><td><strong>김하린</strong></td><td>3학년 2반</td><td>체육관</td><td>05.01 14:18</td><td>NFC-2394</td><td><span class=\"chip chip--success\">인정</span></td><td><button class=\"button button--sm button--secondary\" type=\"button\" data-nav-screen=\"student\" data-toast=\"학생 상세 이력을 엽니다.\">상세</button></td></tr>\n                  <tr><td><strong>박도윤</strong></td><td>4학년 1반</td><td>체육관</td><td>05.02 10:39</td><td>NFC-2478</td><td><span class=\"chip chip--success\">인정</span></td><td><button class=\"button button--sm button--secondary\" type=\"button\" data-nav-screen=\"student\" data-toast=\"학생 상세 이력을 엽니다.\">상세</button></td></tr>\n                  <tr><td><strong>정민아</strong></td><td>5학년 3반</td><td>보건실 앞</td><td>05.02 10:34</td><td>NFC-2473</td><td><span class=\"chip chip--warning\">중복 후보</span></td><td><button class=\"button button--sm button--secondary\" type=\"button\" data-toast=\"중복 후보 검토 메모를 열었습니다.\">검토</button></td></tr>\n                  <tr><td><strong>이서준</strong></td><td>6학년 1반</td><td>급식실 앞</td><td>05.02 10:28</td><td>NFC-2469</td><td><span class=\"chip chip--success\">인정</span></td><td><button class=\"button button--sm button--secondary\" type=\"button\" data-nav-screen=\"student\" data-toast=\"학생 상세 이력을 엽니다.\">상세</button></td></tr>\n                  <tr><td><strong>최윤서</strong></td><td>3학년 1반</td><td>운동장 입구</td><td>05.02 10:21</td><td>NFC-2462</td><td><span class=\"chip chip--neutral\">수동 확인</span></td><td><button class=\"button button--sm button--secondary\" type=\"button\" data-toast=\"수동 확인 상태를 저장했습니다.\">확인</button></td></tr>\n                  <tr><td><strong>오지후</strong></td><td>4학년 2반</td><td>체육관</td><td>05.02 10:12</td><td>NFC-2451</td><td><span class=\"chip chip--success\">인정</span></td><td><button class=\"button button--sm button--secondary\" type=\"button\" data-nav-screen=\"student\" data-toast=\"학생 상세 이력을 엽니다.\">상세</button></td></tr>\n                  <tr><td><strong>한서아</strong></td><td>5학년 1반</td><td>보건실 앞</td><td>05.02 10:05</td><td>NFC-2448</td><td><span class=\"chip chip--danger\">저장 지연</span></td><td><button class=\"button button--sm button--secondary\" type=\"button\" data-toast=\"재처리 요청을 등록했습니다.\">재처리</button></td></tr>\n                </tbody>\n              </table>\n            </div>\n          </section>\n        </div>\n      </main>\n    </div>\n  </div>\n</section>"
+            },
+            {
+                  "id": "student",
+                  "title": "학생 상세 이력",
+                  "purpose": "특정 학생의 누적 참여와 최근 NFC 태그 이력을 확인합니다.",
+                  "status": "상세 조회",
+                  "actions": [
+                        "기록 목록 돌아가기",
+                        "이력 다운로드"
+                  ],
+                  "html": "<section class=\"nfc-screen student-screen\" aria-label=\"학생 상세 이력\">\n  <div class=\"nfc-stage\">\n    <div class=\"nfc-frame\">\n      <aside class=\"sidebar\" aria-label=\"관리 메뉴\">\n        <div class=\"brand\">\n          <div class=\"brand-mark\">참</div>\n          <div class=\"brand-copy\"><strong>참여온</strong><span>health activity desk</span></div>\n        </div>\n        <nav class=\"nav\" aria-label=\"화면 이동\">\n          <button class=\"nav-button\" type=\"button\" data-nav-screen=\"dashboard\" data-toast=\"대시보드로 이동합니다.\"><span class=\"nav-dot\"></span><span>대시보드</span></button>\n          <button class=\"nav-button\" type=\"button\" data-nav-screen=\"records\" data-toast=\"참여 기록 화면으로 이동합니다.\"><span class=\"nav-dot\"></span><span>참여 기록</span></button>\n          <button class=\"nav-button is-active\" type=\"button\"><span class=\"nav-dot\"></span><span>학생 상세</span></button>\n        </nav>\n        <div class=\"sidebar-card\">\n          <strong>최근 상태</strong>\n          <p class=\"meta\">김하린 학생은 오늘 운동장 입구에서 정상 참여로 기록되었습니다.</p>\n        </div>\n      </aside>\n\n      <main class=\"main\">\n        <header class=\"topbar\">\n          <div>\n            <p class=\"eyebrow\">학생별 상세 이력</p>\n            <h1>김하린 학생 참여 기록</h1>\n          </div>\n          <div class=\"topbar-actions\">\n            <button class=\"button button--secondary\" type=\"button\" data-scenario-target=\"student-back-records\" data-nav-screen=\"records\" data-toast=\"참여 기록 목록으로 돌아갑니다.\">기록 목록</button>\n            <button class=\"button\" type=\"button\" data-scenario-target=\"student-export\" data-toast=\"김하린 학생 이력 파일을 준비했습니다.\">이력 다운로드</button>\n          </div>\n        </header>\n\n        <div class=\"content\">\n          <div class=\"student-layout\">\n            <aside class=\"panel profile-card\" aria-label=\"학생 요약\">\n              <div class=\"student-avatar\">김</div>\n              <div class=\"profile-title\">\n                <h2>김하린</h2>\n                <p class=\"meta\">3학년 2반 · 12번</p>\n              </div>\n              <div class=\"profile-stats\">\n                <div class=\"stat-box\"><span class=\"card-label\">누적 참여</span><strong>28회</strong></div>\n                <div class=\"stat-box\"><span class=\"card-label\">이번 주</span><strong>5회</strong></div>\n                <div class=\"stat-box\"><span class=\"card-label\">최근 참여</span><strong>오늘</strong></div>\n                <div class=\"stat-box\"><span class=\"card-label\">미확인</span><strong>0건</strong></div>\n              </div>\n              <div style=\"margin-top:18px\">\n                <span class=\"chip chip--success\">참여 정상</span>\n                <span class=\"chip chip--blue\">운동장 선호</span>\n              </div>\n            </aside>\n\n            <div class=\"records-layout\">\n              <section class=\"panel\" aria-label=\"월별 참여 추이\">\n                <div class=\"panel-header\">\n                  <div><h2>월별 참여 추이</h2><p>학생별 누적 참여 흐름을 확인합니다.</p></div>\n                  <span class=\"chip chip--success\">목표 도달</span>\n                </div>\n                <div class=\"panel-body\">\n                  <div class=\"bar-chart\" aria-label=\"월별 참여 차트\">\n                    <div class=\"bar\"><span style=\"--bar-height:62px\"></span><em>1월</em></div>\n                    <div class=\"bar\"><span style=\"--bar-height:82px\"></span><em>2월</em></div>\n                    <div class=\"bar\"><span style=\"--bar-height:98px\"></span><em>3월</em></div>\n                    <div class=\"bar\"><span style=\"--bar-height:126px\"></span><em>4월</em></div>\n                    <div class=\"bar\"><span style=\"--bar-height:110px\"></span><em>5월</em></div>\n                  </div>\n                </div>\n              </section>\n\n              <section class=\"panel\" aria-label=\"장소별 참여 분포\">\n                <div class=\"panel-header\">\n                  <div><h2>장소별 참여</h2><p>NFC 태그 장소별 기록 분포</p></div>\n                </div>\n                <div class=\"panel-body distribution\">\n                  <div class=\"dist-row\"><span>운동장 입구</span><div class=\"progress-track\"><div class=\"progress-fill\" style=\"width:72%\"></div></div><strong>12회</strong></div>\n                  <div class=\"dist-row\"><span>체육관</span><div class=\"progress-track\"><div class=\"progress-fill\" style=\"width:54%\"></div></div><strong>9회</strong></div>\n                  <div class=\"dist-row\"><span>보건실 앞</span><div class=\"progress-track\"><div class=\"progress-fill\" style=\"width:30%\"></div></div><strong>5회</strong></div>\n                  <div class=\"dist-row\"><span>급식실 앞</span><div class=\"progress-track\"><div class=\"progress-fill\" style=\"width:12%\"></div></div><strong>2회</strong></div>\n                </div>\n              </section>\n\n              <section class=\"panel\" aria-label=\"최근 참여 이력\">\n                <div class=\"panel-header\">\n                  <div><h2>최근 참여 이력</h2><p>최근 NFC 태그 순서로 표시합니다.</p></div>\n                  <button class=\"button button--sm button--secondary\" type=\"button\" data-toast=\"학생 정보를 수정하는 화면은 실제 개발에서 제공됩니다.\">정보 수정</button>\n                </div>\n                <div class=\"panel-body timeline\">\n                  <div class=\"timeline-item\"><strong>05.02 10:42</strong><div><strong>운동장 입구</strong><div class=\"meta\">NFC-2481 · 정상 저장</div></div><span class=\"chip chip--success\">인정</span></div>\n                  <div class=\"timeline-item\"><strong>05.01 14:18</strong><div><strong>체육관</strong><div class=\"meta\">NFC-2394 · 정상 저장</div></div><span class=\"chip chip--success\">인정</span></div>\n                  <div class=\"timeline-item\"><strong>04.30 09:51</strong><div><strong>보건실 앞</strong><div class=\"meta\">NFC-2288 · 정상 저장</div></div><span class=\"chip chip--success\">인정</span></div>\n                  <div class=\"timeline-item\"><strong>04.29 11:07</strong><div><strong>운동장 입구</strong><div class=\"meta\">NFC-2214 · 같은 장소 재태그</div></div><span class=\"chip chip--warning\">중복 후보</span></div>\n                </div>\n              </section>\n            </div>\n          </div>\n        </div>\n      </main>\n    </div>\n  </div>\n</section>"
+            },
+            {
+                  "id": "checkin",
+                  "title": "태그 확인",
+                  "purpose": "학생이 NFC 태그 후 참여 기록 완료 상태를 확인합니다.",
+                  "status": "기록 완료",
+                  "actions": [
+                        "관리자 현황 보기",
+                        "중복 상태 보기"
+                  ],
+                  "html": "<section class=\"nfc-screen tag-screen\" aria-label=\"태그 확인\">\n  <div class=\"tag-stage\">\n    <div class=\"tag-phone\">\n      <header class=\"tag-topline\">\n        <div>\n          <p class=\"eyebrow\">건강증진 프로그램</p>\n          <h2 class=\"tag-title\">참여 확인</h2>\n        </div>\n        <span class=\"date-chip\">5월 2일</span>\n      </header>\n\n      <div class=\"success-card\">\n        <div class=\"nfc-mark-large\" aria-hidden=\"true\">\n          <div class=\"check-dot\">✓</div>\n        </div>\n        <h3 class=\"success-title\">참여가 기록되었습니다</h3>\n        <p class=\"success-desc\">태그 정보가 정상 저장되었습니다. 다음 활동 장소에서도 같은 방식으로 참여를 기록할 수 있습니다.</p>\n\n        <div class=\"tag-meta\" aria-label=\"기록 정보\">\n          <div class=\"tag-meta-row\">\n            <span class=\"tag-meta-label\">학생</span>\n            <span class=\"tag-meta-value\">김하린 · 3학년 2반</span>\n          </div>\n          <div class=\"tag-meta-row\">\n            <span class=\"tag-meta-label\">장소</span>\n            <span class=\"tag-meta-value\">운동장 입구</span>\n          </div>\n          <div class=\"tag-meta-row\">\n            <span class=\"tag-meta-label\">기록 시간</span>\n            <span class=\"tag-meta-value\">오전 10:42</span>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"tag-alert\">\n        같은 장소에서 짧은 시간 안에 다시 태그하면 중복 후보로 표시되고, 담당자가 관리자 화면에서 확인합니다.\n      </div>\n\n      <div class=\"tag-actions\">\n        <button class=\"button\" type=\"button\" data-scenario-target=\"checkin-admin-link\" data-nav-screen=\"dashboard\" data-toast=\"관리자 대시보드로 이동합니다.\">관리자 현황 보기</button>\n        <button class=\"button button--secondary\" type=\"button\" data-toast=\"최근 중복 후보 1건이 관리자 화면에 표시됩니다.\">중복 상태 보기</button>\n      </div>\n    </div>\n  </div>\n</section>"
+            }
+      ],
+      "scenarios": [
+            {
+                  "id": "student-checkin-flow",
+                  "title": "NFC 태그 완료",
+                  "purpose": "학생이 태그 완료 화면을 확인하고 관리자 현황으로 이어지는 연결을 봅니다.",
+                  "flow": "태그 확인 → 대시보드",
+                  "steps": [
+                        {
+                              "screenId": "checkin",
+                              "label": "학생 태그 완료 상태 확인",
+                              "delayBefore": 300,
+                              "delayAfter": 600
+                        },
+                        {
+                              "screenId": "checkin",
+                              "target": "checkin-admin-link",
+                              "label": "관리자 현황 보기",
+                              "toast": "관리자 대시보드로 이동합니다.",
+                              "delayBefore": 300,
+                              "delayAfter": 500
+                        },
+                        {
+                              "screenId": "dashboard",
+                              "label": "관리자 화면에서 방금 기록된 태그 확인",
+                              "delayBefore": 300,
+                              "delayAfter": 900
+                        }
+                  ]
+            },
+            {
+                  "id": "admin-review-flow",
+                  "title": "참여 현황 확인",
+                  "purpose": "대시보드에서 참여 기록을 열고 특정 학생의 상세 이력을 확인합니다.",
+                  "flow": "대시보드 → 참여 기록 → 학생 상세",
+                  "steps": [
+                        {
+                              "screenId": "dashboard",
+                              "target": "dashboard-open-records",
+                              "label": "참여 기록 보기",
+                              "toast": "참여 기록 화면으로 이동합니다.",
+                              "delayBefore": 300,
+                              "delayAfter": 500
+                        },
+                        {
+                              "screenId": "records",
+                              "target": "records-open-student",
+                              "label": "김하린 학생 상세 열기",
+                              "toast": "학생 상세 이력을 엽니다.",
+                              "delayBefore": 300,
+                              "delayAfter": 500
+                        },
+                        {
+                              "screenId": "student",
+                              "label": "학생별 누적 참여와 최근 기록 확인",
+                              "delayBefore": 300,
+                              "delayAfter": 900
+                        }
+                  ]
+            },
+            {
+                  "id": "export-flow",
+                  "title": "참여 데이터 다운로드",
+                  "purpose": "참여 기록에서 기간 필터를 적용하고 엑셀 다운로드 상태를 확인합니다.",
+                  "flow": "참여 기록 → 필터 적용 → 엑셀 다운로드",
+                  "steps": [
+                        {
+                              "screenId": "records",
+                              "target": "records-apply-filter",
+                              "label": "이번 주 필터 적용",
+                              "toast": "필터가 적용되었습니다.",
+                              "delayBefore": 300,
+                              "delayAfter": 500
+                        },
+                        {
+                              "screenId": "records",
+                              "target": "records-export",
+                              "label": "엑셀 다운로드",
+                              "toast": "현재 조건으로 엑셀 파일을 준비했습니다.",
+                              "delayBefore": 300,
+                              "delayAfter": 900
+                        }
+                  ]
+            }
+      ]
+};
+
+    const state = {
+      mode: 'flow',
+      screenId: UX_DATA.screens[0]?.id || null,
+      scenarioId: UX_DATA.scenarios?.[0]?.id || null,
+      scenarioScreenId: UX_DATA.screens[0]?.id || null,
+      scenarioRunToken: 0
+    };
+
+    const $ = (selector, context = document) => context.querySelector(selector);
+    const $$ = (selector, context = document) => Array.from(context.querySelectorAll(selector));
+
+    function setText(selector, value) {
+      const element = $(selector);
+      if (element) element.textContent = value;
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    function scenarioFlowHtml(flow, steps = []) {
+      const fallback = `${steps.length}단계 흐름`;
+      const parts = String(flow || fallback)
+        .split(/\s*(?:->|→)\s*/g)
+        .map((part) => part.trim())
+        .filter(Boolean);
+
+      if (parts.length === 0) {
+        return `<span class="scenario-flow-chip">${escapeHtml(fallback)}</span>`;
+      }
+
+      return parts.map((part, index) => {
+        const chip = `<span class="scenario-flow-chip">${escapeHtml(part)}</span>`;
+        if (index === 0) return chip;
+        return `<span class="scenario-flow-arrow" aria-hidden="true">→</span>${chip}`;
+      }).join('');
+    }
+
+    function initProject() {
+      $('#projectTitle').textContent = UX_DATA.project.title;
+      $('#projectSummary').textContent = UX_DATA.project.summary;
+      document.title = UX_DATA.project.title;
+    }
+
+    function initModes() {
+      $$('.mode-tab').forEach((tab) => {
+        tab.addEventListener('click', () => setMode(tab.dataset.mode));
+      });
+      setMode(state.mode);
+    }
+
+    function setMode(mode) {
+      state.mode = mode === 'flow' ? 'flow' : 'screens';
+
+      $$('.mode-tab').forEach((tab) => {
+        const selected = tab.dataset.mode === state.mode;
+        tab.classList.toggle('is-selected', selected);
+        tab.setAttribute('aria-selected', selected ? 'true' : 'false');
+      });
+
+      $('#flowPanel').classList.toggle('is-active', state.mode === 'flow');
+      $('#screensPanel').classList.toggle('is-active', state.mode === 'screens');
+
+      window.requestAnimationFrame(() => {
+        scaleEmbeddedScreens(state.mode === 'flow' ? $('#scenarioViewport') : $('#screenCanvas'));
+      });
+    }
+
+    function getScreenById(id) {
+      return UX_DATA.screens.find((screen) => screen.id === id) || null;
+    }
+
+    function getScenarioById(id) {
+      return UX_DATA.scenarios?.find((scenario) => scenario.id === id) || UX_DATA.scenarios?.[0] || null;
+    }
+
+    function tableHtml(table) {
+      return `
+        <div class="table-wrapper">
+          <table class="table">
+            <thead>
+              <tr>${table.columns.map((column) => `<th>${escapeHtml(column)}</th>`).join('')}</tr>
+            </thead>
+            <tbody>
+              ${table.rows.map((row) => `<tr>${row.map((cell) => `<td>${escapeHtml(cell)}</td>`).join('')}</tr>`).join('')}
+            </tbody>
+          </table>
+        </div>`;
+    }
+
+    function bindToastButtons(scope) {
+      $$('[data-toast]', scope).forEach((button) => {
+        if (button.dataset.navScreen) return;
+        button.addEventListener('click', (event) => {
+          if (button.matches('a[href="#"]')) event.preventDefault();
+          showToast(button.dataset.toast);
+        });
+      });
+    }
+
+    function bindScreenNavigation(scope, options = {}) {
+      $$('[data-nav-screen]', scope).forEach((item) => {
+        item.addEventListener('click', (event) => {
+          event.preventDefault();
+          const nextScreen = getScreenById(item.dataset.navScreen);
+          if (!nextScreen) {
+            showToast(`화면을 찾을 수 없습니다: ${item.dataset.navScreen}`);
+            return;
+          }
+          if (item.dataset.toast) showToast(item.dataset.toast);
+
+          if (options.scenario) {
+            renderScenarioScreen(nextScreen);
+            updateScenarioStep(`화면 전환: ${nextScreen.title}`);
+          } else {
+            selectScreen(nextScreen.id);
+          }
+        });
+      });
+    }
+
+    function showToast(message) {
+      const toast = $('#toast');
+      toast.textContent = message;
+      toast.classList.add('is-visible');
+      window.clearTimeout(showToast.timer);
+      showToast.timer = window.setTimeout(() => toast.classList.remove('is-visible'), 1800);
+    }
+
+    function initScreens() {
+      const list = $('#screenList');
+      list.innerHTML = UX_DATA.screens.map((screen) => `
+        <div class="listbox-item screen-item" role="option" tabindex="0" data-id="${escapeHtml(screen.id)}" aria-selected="false">
+          <span class="listbox-item__title">${escapeHtml(screen.title)}</span>
+          <span class="listbox-item__description">${escapeHtml(screen.purpose)}</span>
+        </div>
+      `).join('');
+
+      list.addEventListener('click', (event) => {
+        const item = event.target.closest('.screen-item');
+        if (!item) return;
+        selectScreen(item.dataset.id);
+      });
+
+      selectScreen(state.screenId);
+    }
+
+    function getScreen() {
+      return getScreenById(state.screenId);
+    }
+
+    function selectScreen(id) {
+      state.screenId = id;
+      const screen = getScreenById(id);
+      if (!screen) {
+        renderMissingScreen('#screenCanvas', id);
+        return;
+      }
+      $$('.screen-item').forEach((item) => {
+        const selected = item.dataset.id === screen.id;
+        item.classList.toggle('is-selected', selected);
+        item.setAttribute('aria-selected', selected ? 'true' : 'false');
+      });
+      renderScreen(screen);
+    }
+
+    function screenContentHtml(screen) {
+      return `
+        <div class="screen-body">
+          ${screen.html || ''}
+          ${screen.stats ? statGridHtml(screen.stats) : ''}
+          ${screen.table ? tableHtml(screen.table) : ''}
+          ${screen.form ? screenFormHtml(screen.form) : ''}
+          ${screen.panels ? panelGridHtml(screen.panels) : ''}
+        </div>`;
+    }
+
+    function renderScreen(screen) {
+      const canvas = $('#screenCanvas');
+      if (!screen) {
+        renderMissingScreen('#screenCanvas', state.screenId);
+        return;
+      }
+      canvas.innerHTML = screenContentHtml(screen);
+      scaleEmbeddedScreens(canvas);
+      bindToastButtons(canvas);
+      bindScreenNavigation(canvas);
+    }
+
+    function renderMissingScreen(selector, id) {
+      const viewport = $(selector);
+      viewport.innerHTML = `<div class="empty-state">화면을 찾을 수 없습니다: ${escapeHtml(id || 'unknown')}</div>`;
+    }
+
+    function statGridHtml(stats) {
+      return `<div class="stat-grid">${stats.map((stat) => `
+        <div class="stat-card">
+          <div class="stat-card__label">${escapeHtml(stat.label)}</div>
+          <div class="stat-card__value">${escapeHtml(stat.value)}</div>
+        </div>
+      `).join('')}</div>`;
+    }
+
+    function screenFormHtml(fields) {
+      return `
+        <div class="stack">
+          ${fields.map((field) => `
+            <div class="field">
+              <label class="label">${escapeHtml(field.label)}</label>
+              ${field.multiline
+                ? `<textarea class="textarea">${escapeHtml(field.value)}</textarea>`
+                : `<input class="input" value="${escapeHtml(field.value)}">`}
+            </div>
+          `).join('')}
+        </div>`;
+    }
+
+    function panelGridHtml(panels) {
+      return `<div class="content-grid">${panels.map((panel) => `
+        <section class="surface">
+          <h3 class="section-title">${escapeHtml(panel.title)}</h3>
+          ${panel.type === 'list' ? `<div class="stack">${panel.items.map((item) => `
+            <div class="surface">
+              <div class="surface-title">${escapeHtml(item.title)}</div>
+              <div class="surface-description">${escapeHtml(item.meta)}</div>
+            </div>
+          `).join('')}</div>` : ''}
+          ${panel.type === 'actions' ? `<div class="action-row">${panel.actions.map((action) => `
+            <button class="button button--bordered button--sm" type="button" data-toast="${escapeHtml(action)} 동작을 확인합니다.">${escapeHtml(action)}</button>
+          `).join('')}</div>` : ''}
+        </section>
+      `).join('')}</div>`;
+    }
+
+    function initScenarios() {
+      const list = $('#scenarioList');
+      const scenarios = UX_DATA.scenarios || [];
+
+      if (scenarios.length === 0) {
+        list.innerHTML = '<div class="empty-state">등록된 시나리오가 없습니다.</div>';
+        setText('#scenarioTitle', '시나리오 없음');
+        setText('#scenarioStep', '화면 탭에서 개별 화면을 확인합니다.');
+        setText('#scenarioStatus', '없음');
+        renderScenarioScreen(getScreenById(state.scenarioScreenId), state.scenarioScreenId);
+        return;
+      }
+
+      list.innerHTML = scenarios.map((scenario) => `
+        <div class="scenario-item" role="option" tabindex="0" data-id="${escapeHtml(scenario.id)}" aria-selected="false">
+          <div>
+            <span class="scenario-item__title">${escapeHtml(scenario.title)}</span>
+            <span class="scenario-item__description">${escapeHtml(scenario.purpose || '')}</span>
+          </div>
+          <span class="scenario-item__flow">${scenarioFlowHtml(scenario.flow, scenario.steps || [])}</span>
+          <button class="button button--solid button--primary button--sm scenario-run" type="button" data-id="${escapeHtml(scenario.id)}">실행 ▶</button>
+        </div>
+      `).join('');
+
+      list.addEventListener('click', (event) => {
+        const runButton = event.target.closest('.scenario-run');
+        const item = event.target.closest('.scenario-item');
+        if (!item) return;
+        if (runButton) {
+          runScenario(runButton.dataset.id);
+          return;
+        }
+        selectScenario(item.dataset.id);
+      });
+
+      list.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        const item = event.target.closest('.scenario-item');
+        if (!item) return;
+        event.preventDefault();
+        selectScenario(item.dataset.id);
+      });
+
+      selectScenario(state.scenarioId);
+    }
+
+    function selectScenario(id) {
+      state.scenarioRunToken += 1;
+      state.scenarioId = id;
+      const scenario = getScenarioById(id);
+      if (!scenario) return;
+
+      $$('.scenario-item').forEach((item) => {
+        const selected = item.dataset.id === scenario.id;
+        item.classList.toggle('is-selected', selected);
+        item.setAttribute('aria-selected', selected ? 'true' : 'false');
+      });
+
+      setText('#scenarioTitle', scenario.title);
+      setText('#scenarioStatus', '대기');
+      updateScenarioStep(scenario.purpose || '실행 버튼을 누르면 흐름을 재생합니다.');
+      showScenarioCursor(false);
+
+      const firstStep = scenario.steps?.[0] || {};
+      const firstScreenId = firstStep.screenId || state.scenarioScreenId;
+      renderScenarioScreen(getScreenById(firstScreenId), firstScreenId);
+    }
+
+    function renderScenarioScreen(screen, missingId = state.scenarioScreenId) {
+      const viewport = $('#scenarioViewport');
+      if (!screen) {
+        renderMissingScreen('#scenarioViewport', missingId);
+        return;
+      }
+      state.scenarioScreenId = screen.id;
+      viewport.innerHTML = screenContentHtml(screen);
+      viewport.scrollTop = 0;
+      scaleEmbeddedScreens(viewport);
+      bindToastButtons(viewport);
+      bindScreenNavigation(viewport, { scenario: true });
+    }
+
+    function getScenarioRoot() {
+      return $('#scenarioViewport .rental-screen');
+    }
+
+    function scrollThreadToBottom(root) {
+      const thread = $('[data-chatbot-thread]', root) || $('.thread-scroll', root);
+      if (!thread) return;
+      thread.scrollTo({ top: thread.scrollHeight, behavior: 'smooth' });
+    }
+
+    async function typeTextInto(element, value, token, speed = 16) {
+      if (!element) return true;
+
+      const text = String(value || '');
+      if (element.matches('input, textarea')) {
+        element.value = '';
+      } else {
+        element.textContent = '';
+      }
+      element.classList.add('is-typing');
+
+      for (const character of text) {
+        if (token !== state.scenarioRunToken) return false;
+        if (element.matches('input, textarea')) {
+          element.value += character;
+        } else {
+          element.textContent += character;
+        }
+        if (!(await scenarioSleep(speed, token))) return false;
+      }
+
+      element.classList.remove('is-typing');
+      return true;
+    }
+
+    async function applyScenarioAction(action, step, token) {
+      if (!action) return true;
+      if (Array.isArray(action)) {
+        for (const item of action) {
+          if (!(await applyScenarioAction(item, step, token))) return false;
+        }
+        return true;
+      }
+
+      const root = getScenarioRoot();
+      if (!root) return true;
+
+      if (action === 'chatbot-reset') {
+        root.classList.add('is-chatbot-awaiting-question');
+        root.classList.remove('is-chatbot-loading', 'is-chatbot-answered');
+        const composer = $('[data-chatbot-composer-text]', root);
+        const question = $('[data-chatbot-question-text]', root);
+        if (composer) {
+          composer.textContent = '';
+          composer.classList.remove('is-typing');
+        }
+        if (question) question.textContent = '';
+        scrollThreadToBottom(root);
+        return true;
+      }
+
+      if (action === 'chatbot-type-question') {
+        root.classList.add('is-chatbot-awaiting-question');
+        root.classList.remove('is-chatbot-loading', 'is-chatbot-answered');
+        const composer = $('[data-chatbot-composer-text]', root);
+        return typeTextInto(composer, step.text, token, step.typeDelay || 10);
+      }
+
+      if (action === 'chatbot-submit-question') {
+        const composer = $('[data-chatbot-composer-text]', root);
+        const question = $('[data-chatbot-question-text]', root);
+        const text = String(step.text || composer?.textContent || '').trim();
+        if (question) question.textContent = text;
+        if (composer) {
+          composer.textContent = '';
+          composer.classList.remove('is-typing');
+        }
+        root.classList.remove('is-chatbot-awaiting-question', 'is-chatbot-answered');
+        root.classList.add('is-chatbot-loading');
+        scrollThreadToBottom(root);
+        return true;
+      }
+
+      if (action === 'chatbot-reveal-answer') {
+        root.classList.remove('is-chatbot-awaiting-question', 'is-chatbot-loading');
+        root.classList.add('is-chatbot-answered');
+        scrollThreadToBottom(root);
+        return true;
+      }
+
+      if (action === 'approval-open-modal') {
+        root.classList.add('is-approval-modal-open');
+        root.classList.remove('is-approval-loading', 'is-approval-result-ready');
+        $$('[data-approval-field]', root).forEach((field) => {
+          field.value = '';
+          field.classList.remove('is-typing');
+        });
+        return true;
+      }
+
+      if (action === 'approval-fill-modal') {
+        root.classList.add('is-approval-modal-open');
+        root.classList.remove('is-approval-loading', 'is-approval-result-ready');
+        const fields = step.fields || {};
+        for (const [key, value] of Object.entries(fields)) {
+          const field = $(`[data-approval-field="${key}"]`, root);
+          if (!(await typeTextInto(field, value, token, step.typeDelay || 24))) return false;
+        }
+        return true;
+      }
+
+      if (action === 'approval-start-loading') {
+        root.classList.add('is-approval-modal-open', 'is-approval-loading');
+        root.classList.remove('is-approval-result-ready');
+        return true;
+      }
+
+      if (action === 'approval-show-results') {
+        root.classList.remove('is-approval-modal-open', 'is-approval-loading');
+        root.classList.add('is-approval-result-ready');
+        return true;
+      }
+
+      return true;
+    }
+
+    function updateScenarioStep(message) {
+      setText('#scenarioStep', message);
+    }
+
+    function showScenarioCursor(visible) {
+      const cursor = $('#scenarioCursor');
+      cursor.classList.toggle('is-visible', visible);
+      cursor.classList.remove('is-clicking');
+    }
+
+    function moveScenarioCursorTo(target) {
+      const cursor = $('#scenarioCursor');
+      const stageRect = $('#scenarioStage').getBoundingClientRect();
+      const targetRect = target.getBoundingClientRect();
+      const x = targetRect.left - stageRect.left + targetRect.width / 2;
+      const y = targetRect.top - stageRect.top + targetRect.height / 2;
+      cursor.style.transform = `translate(${Math.round(x)}px, ${Math.round(y)}px)`;
+      showScenarioCursor(true);
+    }
+
+    function scaleEmbeddedScreens(scope = document) {
+      $$('.screen-body > .az-screen .az-stage', scope).forEach((stage) => {
+        const phone = $('.az-phone', stage);
+        if (!phone) return;
+
+        phone.style.setProperty('--prototype-scale', '1');
+
+        const stageRect = stage.getBoundingClientRect();
+        if (stageRect.width < 1 || stageRect.height < 1) {
+          phone.style.removeProperty('--prototype-scale');
+          return;
+        }
+
+        const stageStyle = window.getComputedStyle(stage);
+        const paddingX = parseFloat(stageStyle.paddingLeft || 0) + parseFloat(stageStyle.paddingRight || 0);
+        const paddingY = parseFloat(stageStyle.paddingTop || 0) + parseFloat(stageStyle.paddingBottom || 0);
+        const availableWidth = Math.max(1, stageRect.width - paddingX);
+        const availableHeight = Math.max(1, stageRect.height - paddingY);
+        const phoneWidth = phone.offsetWidth || 390;
+        const phoneHeight = phone.offsetHeight || 844;
+        const nextScale = Math.min(1, availableWidth / phoneWidth, availableHeight / phoneHeight);
+
+        phone.style.setProperty('--prototype-scale', String(Math.max(0.1, nextScale)));
+      });
+    }
+
+    function scrollScenarioTargetIntoScreen(target) {
+      const scroller = target.closest('.az-scroll');
+      if (!scroller) return;
+
+      const scrollerRect = scroller.getBoundingClientRect();
+      const targetRect = target.getBoundingClientRect();
+      const phone = target.closest('.az-phone');
+      const scale = phone ? parseFloat(window.getComputedStyle(phone).getPropertyValue('--prototype-scale')) || 1 : 1;
+      const nextTop = scroller.scrollTop
+        + ((targetRect.top
+          - scrollerRect.top
+          - ((scrollerRect.height - targetRect.height) / 2)) / scale);
+
+      scroller.scrollTo({
+        top: Math.max(0, nextTop),
+        behavior: 'smooth'
+      });
+    }
+
+    function getScenarioTarget(targetName) {
+      return $$('[data-scenario-target]', $('#scenarioViewport'))
+        .find((element) => element.dataset.scenarioTarget === targetName);
+    }
+
+    function clearScenarioHighlights() {
+      $$('.is-scenario-highlight', $('#scenarioViewport')).forEach((element) => {
+        element.classList.remove('is-scenario-highlight');
+      });
+    }
+
+    function scenarioSleep(ms, token) {
+      return new Promise((resolve) => {
+        window.setTimeout(() => resolve(token === state.scenarioRunToken), ms);
+      });
+    }
+
+    async function runScenario(id) {
+      setMode('flow');
+      selectScenario(id);
+
+      const scenario = getScenarioById(id);
+      const steps = scenario?.steps || [];
+      if (steps.length === 0) return;
+
+      const token = ++state.scenarioRunToken;
+      setText('#scenarioStatus', '실행 중');
+
+      for (let index = 0; index < steps.length; index += 1) {
+        if (token !== state.scenarioRunToken) return;
+
+        const step = steps[index];
+        const screen = getScreenById(step.screenId || state.scenarioScreenId);
+        if (!screen) {
+          updateScenarioStep(`${index + 1}/${steps.length} · 화면을 찾을 수 없습니다: ${step.screenId || state.scenarioScreenId}`);
+          if (!(await scenarioSleep(900, token))) return;
+          continue;
+        }
+        if (index === 0 || state.scenarioScreenId !== screen.id) {
+          renderScenarioScreen(screen);
+        }
+        clearScenarioHighlights();
+        updateScenarioStep(`${index + 1}/${steps.length} · ${step.label || screen.title}`);
+
+        if (!(await scenarioSleep(step.delayBefore || 520, token))) return;
+
+        if (!(await applyScenarioAction(step.actionBefore || step.action, step, token))) return;
+
+        if (step.target) {
+          const target = getScenarioTarget(step.target);
+          if (!target) {
+            updateScenarioStep(`${index + 1}/${steps.length} · 대상 요소를 찾을 수 없습니다: ${step.target}`);
+            if (!(await scenarioSleep(900, token))) return;
+            continue;
+          }
+
+          scrollScenarioTargetIntoScreen(target);
+          if (!(await scenarioSleep(520, token))) return;
+
+          target.classList.add('is-scenario-highlight');
+          moveScenarioCursorTo(target);
+          if (!(await scenarioSleep(step.moveDuration || 720, token))) return;
+
+          $('#scenarioCursor').classList.add('is-clicking');
+          showToast(step.toast || target.dataset.toast || step.label || '클릭 동작');
+          if (!(await scenarioSleep(step.clickDuration || 520, token))) return;
+          $('#scenarioCursor').classList.remove('is-clicking');
+
+          if (!(await applyScenarioAction(step.actionAfter, step, token))) return;
+        }
+
+        if (!(await scenarioSleep(step.delayAfter || 560, token))) return;
+      }
+
+      clearScenarioHighlights();
+      showScenarioCursor(false);
+      setText('#scenarioStatus', '완료');
+      updateScenarioStep(`${scenario.title} 재생이 완료되었습니다.`);
+    }
+
+    initProject();
+    initModes();
+    initScreens();
+    initScenarios();
+    window.addEventListener('resize', () => {
+      scaleEmbeddedScreens($('#screenCanvas'));
+      scaleEmbeddedScreens($('#scenarioViewport'));
+    });
+  </script>
+</body>
+</html>
